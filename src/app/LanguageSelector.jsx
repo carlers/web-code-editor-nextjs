@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CODE_SNIPPETS, LANGUAGE_VERSIONS } from "../../public/constants";
 
-const LanguageSelector = ({selectedLanguage: [name, version], setSelectedLanguage, setValue }) => {
+const LanguageSelector = ({
+  selectedLanguage: [name, version],
+  setSelectedLanguage,
+  setValue,
+}) => {
   /*   const languages = Object.entries(LANGUAGE_VERSIONS); */
   const [isOpen, setIsOpen] = useState(false);
   const [languages, setLanguages] = useState([]);
@@ -34,24 +38,24 @@ const LanguageSelector = ({selectedLanguage: [name, version], setSelectedLanguag
 
   const selectLanguage = (language, version) => {
     setSelectedLanguage([language, version]);
-    setValue(CODE_SNIPPETS[language] ? CODE_SNIPPETS[language] : "hello world")
+    setValue(CODE_SNIPPETS[language] ? CODE_SNIPPETS[language] : "hello world");
     setIsOpen(false);
   };
 
   return (
-    <div className="flex mb-4 w-full">
-      <button
-        className="border border-gray-500 rounded-md h-10 mr-2 p-2 hover:bg-gray-500"
-        onClick={fetchLanguages}
-      >
-        Refresh
-      </button>
+    <div className="flex mb-8 mt-2 w-full">
       <div className="border border-gray-500 rounded-md h-10 relative flex-grow">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="hover:bg-gray-600 w-full h-full"
         >
-          {loading ? "Loading languages..." : <span>{name} {version}</span>}
+          {loading ? (
+            "Loading languages..."
+          ) : (
+            <span>
+              {name} {version}
+            </span>
+          )}
         </button>
 
         {isOpen && (
@@ -70,6 +74,12 @@ const LanguageSelector = ({selectedLanguage: [name, version], setSelectedLanguag
           </ul>
         )}
       </div>
+      <button
+        className="border border-gray-500 rounded-md h-10 ml-2 p-2 hover:bg-gray-500"
+        onClick={fetchLanguages}
+      >
+        Refresh
+      </button>
     </div>
   );
 };
