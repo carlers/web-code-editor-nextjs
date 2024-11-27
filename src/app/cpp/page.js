@@ -8,7 +8,7 @@ const Page = () => {
   const [files, setFiles] = useState([
     {
       id: 1,
-      name: "file1",
+      name: "file1.cpp",
       content: "asdf",
     },
   ]);
@@ -32,7 +32,7 @@ const Page = () => {
           ...files,
           {
             id: newId,
-            name: `file${newId}`,
+            name: `file${newId}.cpp`,
             content: ";al",
           },
         ]);
@@ -41,13 +41,21 @@ const Page = () => {
     }
   };
 
+  const renameFile = (e, id) => {
+    setFiles(
+      files.map((file) =>
+        file.id === id ? { ...file, name: e.target.value } : file
+      )
+    );
+  };
+
   const deleteFile = (e, id) => {
     e.stopPropagation();
     setFiles((prevFiles) => {
       const updatedFiles = prevFiles.filter((f) => f.id !== id);
       if (updatedFiles.length > 0 && activeFile === id) {
-        setActiveFile(Math.min(...updatedFiles.map(f => f.id)));
-      } 
+        setActiveFile(Math.min(...updatedFiles.map((f) => f.id)));
+      }
       return updatedFiles;
     });
   };
@@ -71,7 +79,13 @@ const Page = () => {
               }`}
               onClick={() => setActiveFile(f.id)}
             >
-              {f.name}
+              <input
+                type="text"
+                value={f.name}
+                onChange={(e) => renameFile(e, f.id)}
+                className="text-white text-sm max-w-14 bg-inherit"
+              />
+
               <button className="ml-2" onClick={(e) => deleteFile(e, f.id)}>
                 x
               </button>
