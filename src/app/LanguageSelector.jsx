@@ -7,7 +7,7 @@ import { CODE_SNIPPETS, LANGUAGE_VERSIONS } from "../../public/constants";
 const LanguageSelector = ({
   selectedLanguage: [name, version],
   setSelectedLanguage,
-  setValue,
+  editorRef
 }) => {
   /*   const languages = Object.entries(LANGUAGE_VERSIONS); */
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ const LanguageSelector = ({
 
   const selectLanguage = (language, version) => {
     setSelectedLanguage([language, version]);
-    setValue(CODE_SNIPPETS[language] ? CODE_SNIPPETS[language] : "hello world");
+    editorRef.current.setValue(CODE_SNIPPETS[language] ? CODE_SNIPPETS[language] : "hello world");
     setIsOpen(false);
   };
 

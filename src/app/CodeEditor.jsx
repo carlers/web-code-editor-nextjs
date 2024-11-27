@@ -9,9 +9,10 @@ const CodeEditor = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(["cpp", "10.2.0"]);
   const [language, version] = selectedLanguage;
   const monacoLanguage = language === "c++" ? "cpp" : language;
-  const [value, setValue] = useState("");
+
   const editorRef = useRef();
-  
+
+  const [files, setFiles] = useState();
 
   const onMount = (editor) => {
     editorRef.current = editor;
@@ -25,7 +26,7 @@ const CodeEditor = () => {
           <LanguageSelector
             selectedLanguage={[language, version]}
             setSelectedLanguage={setSelectedLanguage}
-            setValue={setValue}
+            editorRef={editorRef}
           />
           <Editor
             ref={editorRef}
@@ -33,8 +34,6 @@ const CodeEditor = () => {
             theme="vs-dark"
             language={monacoLanguage}
             defaultValue="hello world"
-            value={value}
-            onChange={(value) => setValue(value)}
             onMount={onMount}
           />
         </div>
